@@ -29,9 +29,7 @@ public class  NumberGenerator : MonoBehaviour
   
   }
 
-  public class FunnySentenceGenerator : MonoBehaviour
- {
-    void Start()
+
     {
        
         string[] words = { "Cat", "Dog", "Car", "Pizza", "Hat", "Fish", "Tree", "Monkey", "Ball", "Bird" };
