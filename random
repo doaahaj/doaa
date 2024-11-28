@@ -1,0 +1,29 @@
+using UnityEngine; 
+
+public class  NumberGenerator : MonoBehaviour  
+{
+  void Start()
+  {
+   int counter = 0;
+   while (counter<20)
+
+
+   {
+    int randomNumber = Random.Range(1, 21); 
+    if (randomNumber == 5)
+
+    {
+      counter++;
+      continue; 
+    }
+     
+    if (randomNumber == 15)
+    {
+      break; 
+    }
+    Debug.Log(randomNumber);
+    counter++;
+    }
+    
+  }  
+}
