@@ -1,0 +1,16 @@
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    void Start()
+    {
+        Player player = new Player("Subhi", 80);
+        Enemy enemy = new Enemy("Zarifeh", 50);
+
+        
+        Debug.Log(player.Name + " starts with health: " + player.Health);
+        Debug.Log(enemy.Name + " starts with health: " + enemy.Health);
+        player.Heal(15); 
+        enemy.Attack(player, 30); 
+    }
+}
