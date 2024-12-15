@@ -1,0 +1,10 @@
+public class Player : Character
+{
+    public Player(string name, int health) : base(name, health) { }
+
+    public void Heal(int amount)
+    {
+        Health += amount;
+        UnityEngine.Debug.Log(Name + " healed by " + amount + ". Health is now: " + Health);
+    }
+}
