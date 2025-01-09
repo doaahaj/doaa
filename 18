@@ -1,0 +1,94 @@
+using UnityEngine;
+
+public class GameInventory : MonoBehaviour
+{
+    void Start()
+    {
+        Inventory potions = new Inventory();
+        potions.AddItem("Healing Potion");
+        potions.AddItem("Strength Potion");
+        Inventory elixirs = new Inventory();
+        elixirs.AddItem("Elixir");
+        elixirs.AddItem("Dark Elixir");
+        Inventory combinedInventory = potions + elixirs;
+        Debug.Log("Combined Inventory:");
+        combinedInventory.ShowItems();
+    }
+}
+
+
+using System;
+using System.Collections.Generic;
+
+public class Inventory
+{
+    private List<string> items = new List<string>();
+    public void AddItem(string item)
+    {
+        items.Add(item);
+    }
+
+    public void ShowItems()
+    {
+        foreach (string item in items)
+        {
+            Console.WriteLine(item);
+        }
+    }
+    public static Inventory operator +(Inventory inv1, Inventory inv2)
+    {
+        Inventory combined = new Inventory();
+        foreach (string item in inv1.items)
+        {
+            combined.AddItem(item);
+        }
+        foreach (string item in inv2.items)
+        {
+            combined.AddItem(item);
+        }
+
+        return combined;
+    }
+}
+
+using System;
+using UnityEngine;
+
+public class GameContainer<T>
+{
+    private T item;
+
+    public void SetItem(T item)
+    {
+        this.item = item;
+    }
+
+    public T GetItem()
+    {
+        return item;
+    }
+}
+
+public static class GameUtils
+{
+    public static string DescribeItem<T>(T something)
+    {
+        return "This item is " + something;
+    }
+}
+
+public class GenericsTest : MonoBehaviour
+{
+    void Start()
+    {
+        GameContainer<string> container = new GameContainer<string>();
+        container.SetItem("Healing Potion");
+        
+        string item = container.GetItem();
+        Debug.Log("Stored item: " + item);
+        string description = GameUtils.DescribeItem(item);
+        Debug.Log(description);
+    }
+}
+
+
