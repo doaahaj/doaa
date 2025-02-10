@@ -1,0 +1,49 @@
+using UnityEngine;
+
+namespace Assignment27
+{
+    public class Assignment27Script : MonoBehaviour
+    {
+        void Start()
+        {
+           
+            int a = 5;
+            int b = 10;
+            int c; 
+
+            Debug.Log("Before CallByValue: a = " + a);
+            CallByValue(a);
+            Debug.Log("After CallByValue: a = " + a);
+
+           
+            Debug.Log("Before CallByReference: b = " + b);
+            CallByReference(ref b);
+            Debug.Log("After CallByReference: b = " + b); 
+
+            
+            CallByOut(out c);
+            Debug.Log("After CallByOut: c = " + c); 
+        }
+
+        
+        void CallByValue(int number)
+        {
+            number += 10;
+            Debug.Log("Inside CallByValue: number = " + number);
+        }
+
+      
+        void CallByReference(ref int number)
+        {
+            number += 10;
+            Debug.Log("Inside CallByReference: number = " + number);
+        }
+
+        
+        void CallByOut(out int number)
+        {
+            number = 20; 
+            Debug.Log("Inside CallByOut: number = " + number);
+        }
+    }
+}
