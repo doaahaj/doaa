@@ -1,0 +1,66 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Assignment26
+{
+    // Base Class
+    public class Creature
+    {
+        public virtual void Speak()
+        {
+            Debug.Log("A creature makes a sound.");
+        }
+    }
+
+    // Interfaces
+    public interface IRunnable
+    {
+        void Run();
+    }
+    
+    public interface IJumpable
+    {
+        void Jump();
+    }
+    
+    public interface ISwimmable
+    {
+        void Swim();
+    }
+    
+    // Kangaroo Class
+    public class Kangaroo : Creature, IRunnable, IJumpable
+    {
+        public void Run() => Debug.Log("Kangaroo runs.");
+        public void Jump() => Debug.Log("Kangaroo jumps.");
+        public override void Speak() => Debug.Log("Kangaroo says: Hop!");
+    }
+    
+    // Duck Class
+    public class Duck : Creature, IRunnable, ISwimmable
+    {
+        public void Run() => Debug.Log("Duck runs.");
+        public void Swim() => Debug.Log("Duck swims.");
+        public override void Speak() => Debug.Log("Duck says: Quack!");
+    }
+    
+    // CreatureManager Class
+    public class CreatureManager : MonoBehaviour
+    {
+        void Start()
+        {
+            Creature kangaroo = new Kangaroo();
+            Creature duck = new Duck();
+            
+            List<Creature> creatures = new List<Creature> { kangaroo, duck };
+            List<IRunnable> runnableCreatures = new List<IRunnable> { (IRunnable)kangaroo, (IRunnable)duck };
+            List<IJumpable> jumpableCreatures = new List<IJumpable> { (IJumpable)kangaroo };
+            List<ISwimmable> swimmableCreatures = new List<ISwimmable> { (ISwimmable)duck };
+            
+            creatures.ForEach(creature => creature.Speak());
+            runnableCreatures.ForEach(runner => runner.Run());
+            jumpableCreatures.ForEach(jumper => jumper.Jump());
+            swimmableCreatures.ForEach(swimmer => swimmer.Swim());
+        }
+    }
+}
