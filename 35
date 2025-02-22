@@ -1,0 +1,177 @@
+using UnityEngine;
+
+public abstract class AbstractBaseClass : MonoBehaviour
+{
+    public abstract void PrintMessage();
+
+    public void ConcreteMethod()
+    {
+        Debug.Log("This is a concrete method.");
+    }
+}
+
+public class DerivedClassExample : AbstractBaseClass
+{
+    public override void PrintMessage()
+    {
+        Debug.Log("Hello from DerivedClass!");
+    }
+
+    void Start()
+    {
+        PrintMessage();
+        ConcreteMethod();
+    }
+}
+
+using UnityEngine;
+
+public class BoxingUnboxing : MonoBehaviour
+{
+    void Start()
+    {
+        int health = 100;
+        object boxedHealth = health; // Boxing
+        int unboxedHealth = (int)boxedHealth; // Unboxing
+
+        Debug.Log("Original: " + health);
+        Debug.Log("Boxed: " + boxedHealth);
+        Debug.Log("Unboxed: " + unboxedHealth);
+    }
+}
+
+using UnityEngine;
+using System;
+
+public class BuiltInDelegatesExample : MonoBehaviour
+{
+    void Start()
+    {
+        Action printMessage = () => Debug.Log("Hello, Unity!");
+        printMessage();
+
+        Func<int, int> square = num => num * num;
+        Debug.Log("Square: " + square(4));
+
+        Predicate<int> isEven = num => num % 2 == 0;
+        Debug.Log("Is 4 even? " + isEven(4));
+    }
+}
+
+using UnityEngine;
+using System.Collections.Generic;
+
+public class ListFindAllExample : MonoBehaviour
+{
+    void Start()
+    {
+        List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6 };
+        List<int> evenNumbers = numbers.FindAll(num => num % 2 == 0);
+
+        Debug.Log("Even Numbers: " + string.Join(", ", evenNumbers));
+    }
+}    
+using UnityEngine;
+using System.Collections.Generic;
+
+public class ListMethodsExample : MonoBehaviour
+{
+    void Start()
+    {
+        List<int> numbers = new List<int> { 1, 5, 3, 9, 7 };
+        numbers.Sort((a, b) => b.CompareTo(a)); 
+
+        Debug.Log("Sorted List: " + string.Join(", ", numbers));
+    }
+}    
+
+using UnityEngine;
+
+public class MethodChainingExample : MonoBehaviour
+{
+    void Start()
+    {
+        transform.SetPosition(new Vector3(2, 2, 2))
+                 .SetRotation(Quaternion.Euler(0, 45, 0))
+                 .SetScale(new Vector3(2, 2, 2));
+    }
+}
+
+public static class TransformExtensions
+{
+    public static Transform SetPosition(this Transform transform, Vector3 position)
+    {
+        transform.position = position;
+        return transform;
+    }
+
+    public static Transform SetRotation(this Transform transform, Quaternion rotation)
+    {
+        transform.rotation = rotation;
+        return transform;
+    }
+
+    public static Transform SetScale(this Transform transform, Vector3 scale)
+    {
+        transform.localScale = scale;
+        return transform;
+    }
+}
+using UnityEngine;
+
+public class MulticastDelegateExample : MonoBehaviour
+{
+    delegate void MathOperation(int number);
+
+    void Start()
+    {
+        MathOperation mathDelegate = DoubleNumber;
+        mathDelegate += SquareNumber;
+        mathDelegate += CubeNumber;
+
+        mathDelegate(5); // Invoke delegate
+    }
+
+    void DoubleNumber(int num) { Debug.Log("Double: " + (num * 2)); }
+    void SquareNumber(int num) { Debug.Log("Square: " + (num * num)); }
+    void CubeNumber(int num) { Debug.Log("Cube: " + (num * num * num)); }
+}        
+using UnityEngine;
+using UnityEngine.Events;
+
+public class UnityEventExample : MonoBehaviour
+{
+    public UnityEvent onEvent;
+
+    void Start()
+    {
+        onEvent.AddListener(OnEventTriggered);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            onEvent.Invoke();
+        }
+    }
+
+    void OnEventTriggered()
+    {
+        Debug.Log("Event Triggered!");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
