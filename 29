@@ -1,0 +1,212 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+namespace Assignment29
+{
+  
+    public class BasicsScript : MonoBehaviour
+    {
+        void Start()
+        {
+            var number = 5;
+            var text = "Hello, Unity!";
+            var isEven = (number % 2 == 0) ? "even" : "odd";
+            Debug.Log($"The number {number} is {isEven}.");
+            Debug.Log("Current Date: " + System.DateTime.Now.ToString("yyyy-MM-dd"));
+            Debug.Log("Current Time: " + System.DateTime.Now.ToString("HH:mm:ss"));
+            Debug.Log("Current Day: " + System.DateTime.Now.DayOfWeek);
+        }
+    }
+
+   
+    public class CustomObject
+    {
+        public int ID { get; private set; }
+        public string Name { get; private set; }
+
+        public CustomObject(int id, string name)
+        {
+            ID = id;
+            Name = name;
+        }
+
+        public override string ToString()
+        {
+            return $"Object [ID: {ID}, Name: {Name}]";
+        }
+    }
+
+    public class CustomObjectTester : MonoBehaviour
+    {
+        void Start()
+        {
+            CustomObject obj = new CustomObject(1, "Example");
+            print(obj);
+        }
+    }
+
+   
+    public class Utilities : MonoBehaviour
+    {
+        public int Add(params int[] numbers)
+        {
+            int sum = 0;
+            foreach (int num in numbers)
+            {
+                sum += num;
+            }
+            return sum;
+        }
+
+        public string RepeatString(string str, int times)
+        {
+            return string.Concat(System.Linq.Enumerable.Repeat(str, times));
+        }
+    }
+
+    public class UtilitiesTester : MonoBehaviour
+    {
+        void Start()
+        {
+            Utilities utilities = gameObject.AddComponent<Utilities>();
+            Debug.Log("Sum: " + utilities.Add(1, 2, 3, 4, 5));
+            Debug.Log("Repeated String: " + utilities.RepeatString("Hello", 3));
+        }
+    }
+
+   
+    public class Animal
+    {
+        public virtual void MakeSound() => Debug.Log("Animal sound");
+        public void Move() => Debug.Log("Animal moves.");
+    }
+
+    public class Cat : Animal, ICanFight
+    {
+        public override void MakeSound() => Debug.Log("Meow!");
+        public new void Move() => Debug.Log("Cat runs quickly.");
+        public void Attack() => Debug.Log("Cat attacks with claws!");
+    }
+
+    public interface ICanFight
+    {
+        void Attack();
+    }
+
+    public class Warrior : ICanFight
+    {
+        public void Attack() => Debug.Log("Warrior attacks with a sword!");
+    }
+
+    public class TypeManagementScript : MonoBehaviour
+    {
+        void Start()
+        {
+            Animal myAnimal = new Cat();
+            myAnimal.MakeSound();
+            myAnimal.Move();
+
+            Cat myCat = myAnimal as Cat;
+            if (myCat != null)
+            {
+                myCat.MakeSound();
+                myCat.Move();
+            }
+
+            List<ICanFight> fighters = new List<ICanFight> { new Cat(), new Warrior() };
+            foreach (var fighter in fighters)
+            {
+                fighter.Attack();
+                if (fighter is Cat) Debug.Log("The object is a Cat.");
+                else if (fighter is Warrior) Debug.Log("The object is a Warrior.");
+            }
+        }
+    }
+
+    public class ExceptionHandlingScript : MonoBehaviour
+    {
+        void Start()
+        {
+            int playerScore = 100;
+            int diviser = 0;
+            try
+            {
+                Debug.Log("Attempting to calculate score multiplier...");
+                int totalScore = playerScore / diviser;
+            }
+            catch (DivideByZeroException)
+            {
+                Debug.LogError("Error: Division by zero occurred while calculating score multiplier.");
+            }
+            finally
+            {
+                Debug.Log("Score calculation complete. Cleaning up resources.");
+            }
+        }
+    }
+
+  
+    public class UnitySpecificScript : MonoBehaviour
+    {
+        void OnEnable() => print("GameObject Enabled");
+        void OnDisable() => print("GameObject Disabled");
+        void Start()
+        {
+            print("Game started!");
+            GameObject target = GameObject.Find("TargetObject");
+            if (target != null) print("Found object by name: " + target.name);
+            else print("No TargetObject found.");
+            GameObject joker = GameObject.FindGameObjectWithTag("Joker");
+            if (joker != null) print("Found object by tag: " + joker.name);
+            else print("No Joker object found.");
+            Light light = GameObject.FindObjectOfType<Light>();
+            if (light != null) print("Found object of type Light: " + light.name);
+            else print("No Light object found.");
+        }
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                GameObject target = GameObject.Find("TargetObject");
+                if (target != null)
+                {
+                    target.SetActive(false);
+                    print("TargetObject deactivated!");
+                }
+            }
+        }
+    }
+
+
+    public class RecursionScript : MonoBehaviour
+    {
+        int FibonacciRecursive(int n)
+        {
+            if (n <= 1) return n;
+            return FibonacciRecursive(n - 1) + FibonacciRecursive(n - 2);
+        }
+
+        int FibonacciIterative(int n)
+        {
+            if (n <= 1) return n;
+            int a = 0, b = 1, sum = 0;
+            for (int i = 2; i <= n; i++)
+            {
+                sum = a + b;
+                a = b;
+                b = sum;
+            }
+            return sum;
+        }
+
+        void Start()
+        {
+            Debug.Log($"Fibonacci Recursive (n=10): {FibonacciRecursive(10)}");
+            Debug.Log($"Fibonacci Iterative (n=10): {FibonacciIterative(10)}");
+            Debug.Log($"Fibonacci Recursive (n=30): {FibonacciRecursive(30)}");
+            Debug.Log($"Fibonacci Iterative (n=30): {FibonacciIterative(30)}");
+        }
+    }
+}
